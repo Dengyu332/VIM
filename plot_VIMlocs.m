@@ -1,5 +1,5 @@
-load('/Volumes/Nexus/Users/akappel/_Downloads/leaddbs/templates/space/MNI_ICBM_2009b_NLIN_ASYM/atlases/DISTAL compound DBS (Ewert 2016)/atlas_index.mat', 'atlases')
-load('/Volumes/Nexus/Users/akappel/_Downloads/leaddbs/templates/space/MNI_ICBM_2009b_NLIN_ASYM/cortex/CortexHiRes.mat', 'Vertices_lh', 'Faces_lh')
+load('E:\MATLAB\leaddbs-master\templates\space\MNI_ICBM_2009b_NLIN_ASYM\atlases\DISTAL compound DBS (Ewert 2016)/atlas_index.mat', 'atlases');
+load('E:\MATLAB\lead\templates\space\MNI_ICBM_2009b_NLIN_ASYM\cortex/CortexHiRes.mat', 'Vertices_lh', 'Faces_lh');
 
 figure; hold on
 
@@ -14,27 +14,20 @@ set(gca,'CameraPosition',DispCamPos.cp,...
 'CameraViewAngle',DispCamPos.cva,...
 'CameraUpVector',DispCamPos.uv);
 
-for side=1:2
-    Hp = patch('vertices',atlases.fv{43,side}.vertices,'faces',atlases.fv{43,side}.faces,...
-        'facecolor',[.50 .50 .750],'edgecolor','none',...
-        'facelighting', 'gouraud', 'specularstrength', .50, 'diffusestrength', 0.1, 'facealpha', 0.35);
-    %camlight('headlight','infinite');
-    %axis on; axis equal
-    hold on;
-    Hp = patch('vertices',atlases.fv{44,side}.vertices,'faces',atlases.fv{44,side}.faces,...
-        'facecolor',[.50 .50 .750],'edgecolor','none',...
-        'facelighting', 'gouraud', 'specularstrength', .50, 'diffusestrength', 0.1, 'facealpha', 0.35);
-    %camlight('headlight','infinite');
-    %axis on; axis equal
-    Hp = patch('vertices',atlases.fv{45,side}.vertices,'faces',atlases.fv{45,side}.faces,...
-        'facecolor',[.50 .50 .750],'edgecolor','none',...
-        'facelighting', 'gouraud', 'specularstrength', .50, 'diffusestrength', 0.1, 'facealpha', 0.35);
-    %camlight('headlight','infinite');
-    %axis on; axis equal
+for atlas_oi = unique_loc;
+    for side=1:2
+        Hp = patch('vertices',atlases.fv{atlas_oi,side}.vertices,'faces',atlases.fv{atlas_oi,side}.faces,...
+            'facecolor',[.50 .50 .750],'edgecolor','none',...
+            'facelighting', 'gouraud', 'specularstrength', .50, 'diffusestrength', 0.1, 'facealpha', 0.35);
+    camlight('headlight','infinite');
+    axis off; axis equal
+        hold on;
+
     
      %alpha 0.75
     
 
+    end
 end
 
 Voa = find(contains(atlases.names, 'Ventrooralis'));
@@ -85,8 +78,9 @@ for side=1:2
 
 end
 
-
-cd('/Volumes/Nexus/Electrophysiology_Data/DBS_Intraop_Recordings/')
+Session_info = readtable('Z:\Users\dwang\VIM\datafiles\Docs\Session_info_lead.xlsx');
+subjects = {'DBS4049','DBS4051','DBS4052','DBS4053','DBS4054','DBS4055','DBS4056'};
+cd('Z:\Electrophysiology_Data\DBS_Intraop_Recordings')
 
 for s = 1:length(subjects)
     lead_loc = load([subjects{s},'/Anatomy/Lead_',subjects{s},'/ea_reconstruction.mat'], 'reco');
