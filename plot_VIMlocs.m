@@ -1,5 +1,5 @@
 load('E:\MATLAB\leaddbs-master\templates\space\MNI_ICBM_2009b_NLIN_ASYM\atlases\DISTAL compound DBS (Ewert 2016)/atlas_index.mat', 'atlases');
-load('E:\MATLAB\lead\templates\space\MNI_ICBM_2009b_NLIN_ASYM\cortex/CortexHiRes.mat', 'Vertices_lh', 'Faces_lh');
+load('E:\MATLAB\lead_v2.1.5\templates\space\MNI_ICBM_2009b_NLIN_ASYM\cortex\CortexHiRes.mat', 'Vertices_lh', 'Faces_lh');
 
 figure; hold on
 
