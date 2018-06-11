@@ -1,5 +1,5 @@
-%This script group all thalamic pilot patients,chuncking
-%rejecting bad trials and common average referencing
+%This script group all thalamic pilot patients (except one orphan) electrophysiological data,filtering, chuncking,
+%rejecting bad trials for each channel and common average referencing
 
 % load bml packages
 bml_defaults;
@@ -9,7 +9,7 @@ fs = 1000;
 % set machine
 DW_machine;
 %read in session info
-Session_info = readtable([dionysis,'Users/dwang/VIM/datafiles/Docs/Session_info_lead.xlsx']);
+Session_info = readtable([dionysis,'Users/dwang/VIM/datafiles/Docs/Session_info_new.xlsx']);
 
 % process one session at a time
 for total_session_idx = 1:height(Session_info)
@@ -28,6 +28,10 @@ for total_session_idx = 1:height(Session_info)
     coding = bml_annot_read('annot/coding.txt');
     electrode =  bml_annot_read('annot/electrode.txt');
     session = bml_annot_read('annot/session.txt');
+    
+    %% Filtering
+    
+    
     %% D contains all sessions for one patient, choose session of interest and cut session of interest into trials
 
     % remove trials lacking time data, so first tidy coding mat file
@@ -204,8 +208,12 @@ for total_session_idx = 1:height(Session_info)
     crti3 = find(sp_idx>tr_length);
     disp(['trials whose speech onset idx greater than trial length:',num2str(crti3)]);
     
+    % also discard trials less than 6780 for filter purpose: subject to
+    % change;
+    crti4 = find(tr_length<=6780);
+    
     %% combine badtrials with short trials and get trials to be discarded
-    discarded_trials = unique([bad_trials,crti1,crti2,crti3]);
+    discarded_trials = unique([bad_trials,crti1,crti2,crti3,crti4']);
     
     %% remove discarded trial from epoch table
     epoch_oi(discarded_trials,:) = [];
@@ -305,8 +313,8 @@ for total_session_idx = 1:height(Session_info)
     Results(total_session_idx).annot.time = time;
 end
 
-readme = {'bad_trial rejected, not software filtered, lead patients only'};
+readme = {'bad_trial rejected, not software filtered, all patients'};
 
-save([dionysis,'Users/dwang/VIM/datafiles/processed_data/','Processed_lead.mat'],'Results','readme','-v7.3');
+save([dionysis,'Users/dwang/VIM/datafiles/processed_data/','Processed_all.mat'],'Results','readme','-v7.3');
 
 cd([dionysis,'Users/dwang/VIM/datafiles/processed_data']);

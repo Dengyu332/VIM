@@ -39,25 +39,26 @@ caxis([-2,2]);colorbar
 
 
 %% macro
-load([dionysis,'Users/dwang/VIM/datafiles/processed_data/macro_mean_trial_car.mat']);
-macro_mean_trial_car = mean_trial;
+DW_machine;
+load([dionysis,'Users/dwang/VIM/datafiles/processed_data/macro_mean_trial_nonref_avgfirst.mat']);
+macro_mean_trial_nonref_avgfirst = mean_trial;
 
-macro_mean_trial_car(7:8) = [];
+macro_mean_trial_nonref_avgfirst(7:8) = [];
 
 fs = 1000;
 fq = 2:2:200;
 
-t = linspace(-2.5,3,5501);
+t = linspace(-3,3,6000);
 badch = [];
-for total_session_idx = 1:length(macro_mean_trial_car);
-    for ch_idx = 1:size(macro_mean_trial_car(total_session_idx).sp,3);
+for total_session_idx = 1:length(macro_mean_trial_nonref_avgfirst);
+    for ch_idx = 1:size(macro_mean_trial_nonref_avgfirst(total_session_idx).sp_ref_avgfirst,3);
         figure (ch_idx);
-        imagesc(t, fq,macro_mean_trial_car(total_session_idx).sp(:,:,ch_idx)');set(gca, 'YDir', 'Normal');
+        imagesc(t, fq,macro_mean_trial_nonref_avgfirst(total_session_idx).sp_ref_avgfirst(:,:,ch_idx)');set(gca, 'YDir', 'Normal');
         
-        all_data = macro_mean_trial_car(total_session_idx).sp(:,:,ch_idx)';
+        all_data = macro_mean_trial_nonref_avgfirst(total_session_idx).sp_ref_avgfirst(:,:,ch_idx)';
         all_data = all_data(:);
 
-        colormap jet;caxis([-1,2]);colorbar
+        colormap jet;caxis([-10,10]);colorbar
     end
     
     badch_i = input('bad figure index:');
@@ -67,9 +68,9 @@ end
  
  
 compact_macro_car = [];
-for total_session_idx = 1:length(macro_mean_trial_car);
-    compact_macro_car = cat(3,compact_macro_car,macro_mean_trial_car(total_session_idx).sp...
-        (:,:,setdiff(1:size(macro_mean_trial_car(total_session_idx).sp,3),badch{total_session_idx})));
+for total_session_idx = 1:length(macro_mean_trial_nonref_avgfirst);
+    compact_macro_car = cat(3,compact_macro_car,macro_mean_trial_nonref_avgfirst(total_session_idx).sp_ref_avgfirst...
+        (:,:,setdiff(1:size(macro_mean_trial_nonref_avgfirst(total_session_idx).sp_ref_avgfirst,3),badch{total_session_idx})));
 end
 
 avg_sp_allpatients = mean(compact_macro_car,3);

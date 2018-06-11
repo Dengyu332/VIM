@@ -206,21 +206,34 @@ hold on; plot(f, log(smooth(2*abs(Y(1:NFFT/2+1)),20)));
 
 session_used = [1:6,9:14];
 fs = 1000;
-for session_id = session_used;
-    sp_onset_idx_i = num2cell(round((Results2(session_id).annot.coding.onset_word - Results2(session_id).annot.coding.starts)*fs));
 
-    sp_center_trials_i =cellfun(@(x,y) x(1,y-3*fs:y+3*fs),Results2(session_id).Macro_LFP,sp_onset_idx_i','UniformOutput',0);
-    sp_mean_i = mean(cell2mat(reshape(sp_center_trials_i,[1,1,length(sp_center_trials_i)])),3);
-    figure(session_id);hold on; plot(sp_mean_i);
+total_contact = 0;
+for session_id = session_used;
+    for contact_id = 1:size(Results2(session_id).Macro_LFP{1},1);
+        total_contact = total_contact+1;
+        sp_onset_idx_i = num2cell(round((Results2(session_id).annot.coding.onset_word - Results2(session_id).annot.coding.starts)*fs));
+
+        sp_center_trials_i =cellfun(@(x,y) x(contact_id,y-3*fs:y+3*fs),Results2(session_id).Macro_LFP,sp_onset_idx_i','UniformOutput',0);
+        sp_mean_i = mean(cell2mat(reshape(sp_center_trials_i,[1,1,length(sp_center_trials_i)])),3);
+        figure(total_contact);hold on; plot(sp_mean_i);
+    end
 end
 
 session_used = [1:6,9:14];
 fs = 1000;
-for session_id = session_used;
-    sp_onset_idx_i = num2cell(round((Results1(session_id).annot.coding.onset_word - Results1(session_id).annot.coding.starts)*fs));
 
-    sp_center_trials_i =cellfun(@(x,y) x(2,y-3*fs:y+3*fs),Results1(session_id).Macro_LFP,sp_onset_idx_i','UniformOutput',0);
-    sp_mean_i = mean(cell2mat(reshape(sp_center_trials_i,[1,1,length(sp_center_trials_i)])),3);
-    figure(session_id);hold on; plot(sp_mean_i);
+total_contact = 0;
+for session_id = session_used;
+    for contact_id = 1:size(Results2(session_id).Macro_LFP{1},1);
+        total_contact = total_contact+1;
+        
+        sp_onset_idx_i = num2cell(round((Results1(session_id).annot.coding.onset_word - Results1(session_id).annot.coding.starts)*fs));
+
+        sp_center_trials_i =cellfun(@(x,y) x(contact_id,y-3*fs:y+3*fs),Results1(session_id).Macro_LFP,sp_onset_idx_i','UniformOutput',0);
+        sp_mean_i = mean(cell2mat(reshape(sp_center_trials_i,[1,1,length(sp_center_trials_i)])),3);
+        figure(total_contact);hold on; plot(sp_mean_i);
+        
+        saveas(figure(total_contact),[dionysis,'Users/dwang/VIM/Results/Macro_raw_sp_centered/',Results1(session_id).session{:},'_contact',num2str(contact_id),'.fig']);
+    end
 end    
     
