@@ -2,10 +2,12 @@
 % check timings of *_ft_raw_session_new.mat files under each subjects
 % folder
 
+% last check time: 07/25/2018
+
 % set machine
 DW_machine;
 %read in Subject_list
-Subject_list = readtable([dionysis,'Users/dwang/VIM/datafiles/Docs/Subject_list.xlsx']);
+Subject_list = readtable([dionysis,'Users/dwang/VIM/datafiles/Docs/Subject_list_allVim.xlsx']);
 Subject_list(2,:) =[];
 
 

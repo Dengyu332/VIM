@@ -1,6 +1,5 @@
-% Find the location of each contact in thalamus, use windows server to do
-% the job
-% preliminary analysis for SFN abstract submission
+% This is used in preliminary analysis for SFN abstract submission
+% Find the location of each contact in thalamus, use windows server to do the job
 
 %set machine to windows
 DW_machine;

@@ -1,6 +1,6 @@
-% This script follows DW_group_lead_loc. Group contacts to VA, VLa, VLp and
-% VP
+% This script follows DW_group_lead_loc. Group contacts to VA, VLa, VLp and VP
 % use atlases of V-1.6
+% generate contact_info_step2.mat
 
 % specify machine to run on
 DW_machine;

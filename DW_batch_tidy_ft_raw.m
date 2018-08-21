@@ -1,7 +1,7 @@
 %follow DW_batch_check_coding
 %This script loops through all thalamic pilot patients
 %ft_raw_session_new.mat data,pick out subcortical recording and ecog recording separately, 
-%and divide data by session (also remove fuitle channels of the session)
+%and divide data by session (also remove futile channels of the session)
 % generate *_session*_subcort.mat and *_session*_ecog.mat files
 
 % set machine

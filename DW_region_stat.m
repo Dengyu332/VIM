@@ -1,3 +1,4 @@
+% takes in contact_info_step2.mat
 % count contact number of each region oi
 
 L_VLa = 0; R_VLa = 0; L_VLp = 0; R_VLp = 0; L_other = 0; R_other = 0;
