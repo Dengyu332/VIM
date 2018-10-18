@@ -54,7 +54,7 @@ vim_l = patch('vertices',atlases_thal.fv{18,2}.vertices,'faces',atlases_thal.fv{
 coords_mess = extractfield(contact_info,'mni_coords');
 coords_all = reshape(coords_mess,[3,length(coords_mess)/3])'; % get all contacts' coordinates
 
-plot3(coords_all(:,1), coords_all(:,2), coords_all(:,3), 'r.', 'markersize', 6)
+plot3(coords_all(:,1), coords_all(:,2), coords_all(:,3), 'r.', 'markersize', 10)
 
 saveas(gcf,'Z:\Users\dwang\VIM\Results\contact_loc\outlook.fig');
 

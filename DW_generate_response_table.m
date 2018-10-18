@@ -1,18 +1,21 @@
 % first create 08/03/2018
+% renamed on 08/25/2018
+% refine on 09/12/2018
 %% follow DW_batch_CAR; takes in step3 data files
 % generate a stat table counting contacts activity significance during
 % speech. Method: permutation test
-% generate stat_table.mat under 'datafiles/preprocessed_new/v2/'
+% generate speech_response_table.mat under 'datafiles/preprocessed_new/v2/'
 % h value: 0 means no significance, 1 means significantly largert than
 % baseline, -1 means significantly smaller than baseline
+% region of activation chosen: subject to change, 0.5s post spon & 1-1.5
+% post cue (result 1) or cue2spoff & 0-3 post cue (result 2) is used now
 
 %specify machine
 DW_machine;
 
-% remove fieldtrip package to make sure that we use built-in filtfilt and hilbert 
+% remove fieldtrip package and spm12 to make sure that we use built-in filtfilt and hilbert 
 rmpath(genpath([dropbox 'Functions/Dengyu/git/fieldtrip']));
-
-
+rmpath(genpath('/Users/Dengyu/Downloads/spm12'));
 
 % data sampling frequency
 fs = 1000;
@@ -98,13 +101,13 @@ for contact_id = 1:length(contact_info)
                 base_val = cell2mat(cellfun(@(x) mean(x),base_z,'UniformOutput',0))';
                 
                 
-                % get post cue 1-1.5s % select this period to calculate
+                % get post cue 0-3s % select this period to calculate
                 % activity
                 
                 clearvars roi_starts roi_ends data_1 data_z data_val;
 
-                roi_starts = num2cell(round(fs*(D_used.epoch.stimulus_starts - D_used.epoch.starts)) + 1 * fs)';
-                roi_ends = num2cell(round(fs*(D_used.epoch.stimulus_starts - D_used.epoch.starts)) + 1.5 * fs)';
+                roi_starts = num2cell(round(fs*(D_used.epoch.stimulus_starts - D_used.epoch.starts)))';
+                roi_ends = num2cell(round(fs*(D_used.epoch.stimulus_starts - D_used.epoch.starts)) + 3 * fs)';
                 
                 data_1 = cellfun(@(x,y,z) x(:,y:z),signal{band_id}(ref_id,:),roi_starts,roi_ends,'UniformOutput',0);
                 
@@ -234,12 +237,12 @@ for contact_id = 1:length(contact_info)
                 base_val = cell2mat(cellfun(@(x) mean(x),base_z,'UniformOutput',0))';                
                 
                 
-                % sp centered, 0.5s post spon
+                % region chosen: cue2spoff
                 
                 clearvars roi_starts roi_ends data_1 data_z data_val;
 
-                roi_starts = num2cell(round(fs*(D_used.epoch.onset_word - D_used.epoch.starts)))';
-                roi_ends = num2cell(round(fs*(D_used.epoch.onset_word - D_used.epoch.starts)) + 0.5*fs)';
+                roi_starts = num2cell(round(fs*(D_used.epoch.stimulus_starts - D_used.epoch.starts)))';
+                roi_ends = num2cell(round(fs*(D_used.epoch.offset_word - D_used.epoch.starts)))';
                 
                 data_1 = cellfun(@(x,y,z) x(:,y:z),signal{band_id}(ref_id,:),roi_starts,roi_ends,'UniformOutput',0);
                 
@@ -294,5 +297,6 @@ for i = 1:size(stat_table,1)
 end
 
 stat_table = temp;
-readme = 'single-sided permutation test, no FDR, Roi is 0.5s post spon, except for DBS4039 (1-1.5s post cue onset)';
-save([dionysis 'Users/dwang/VIM/datafiles/preprocessed_new/v2/stat_table.mat'],'stat_table','readme');
+speech_response_table = stat_table;
+readme = 'single-sided permutation test, no FDR, Roi is cue2spoff, except for DBS4039 (0-3s post cue onset)';
+save([dionysis 'Users/dwang/VIM/datafiles/preprocessed_new/v2/speech_response_table.mat'],'speech_response_table','readme');

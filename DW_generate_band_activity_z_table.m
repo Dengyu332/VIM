@@ -1,12 +1,15 @@
 % first created on 08/07/2018
+
 % follows DW_batch_subcort_single_contact_hilbert.m
 
 % For each contact, generate an overall activity of each band (alpha, lowbeta, highbeta, highgamma)
 % For each contact and each band, Roi is 0.5s post spon, except for
 % DBS4039 (1-1.5s post cue)
-
 % output is a z_table
 % generate z_table.mat under 'datafiles/preprocessed_new/v2/'
+
+% edit on 09/17/2018
+% we also generate z_table2, with Roi -0.5-0.5 peri spon, DBS4039(0.5-1.5 post cue)
 
 %specify machine
 DW_machine;

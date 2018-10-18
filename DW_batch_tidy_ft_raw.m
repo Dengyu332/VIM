@@ -29,7 +29,7 @@ for Subject_idx = 1:height(Subject_list) % loop through all the thalamic pilot s
 
     load([data_dir.folder,filesep,data_dir.name]); % load D.mat
     
-    for which_session = 1:length(D.trial); % deal with one session at a time
+    for which_session = 1:length(D.trial) % deal with one session at a time
         ecog_ch_idx = find(strcmp('ecog',cellfun(@(x) x(1:4),D.label,'UniformOutput',0))); % ecog channels
         
         lead_ch_idx = find(strcmp('dbs',cellfun(@(x) x(1:3),D.label,'UniformOutput',0))); % lead channels
@@ -70,7 +70,7 @@ for Subject_idx = 1:height(Subject_list) % loop through all the thalamic pilot s
             if strcmp('DBS4040',Subject_id)
                 D_ecog.side = 'R';
             elseif (any(strcmp(Subject_list.Subject_id(7:13),Subject_id))) && (which_session == 2)
-                D_ecog.side = 'L';
+                D_ecog.side = 'R'; % corrected on 09/27, previously is mistakenly 'L'
             end
                 
             
