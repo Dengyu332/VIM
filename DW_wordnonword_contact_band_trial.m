@@ -2,6 +2,8 @@
 % modified on 10/17/2018: add word/nonword trial_selection, annd add one
 % data point to baseline and z (i.e, 1001 and 4001 data points, respectively)
 
+% modified on 10/18/2018: modulate the script to run on windows server
+
 % Aims to generate an average trial for each contact's each band (8), each
 % locking selection (3), and either first 60 or entire 120 or word or
 % nonword trials
@@ -12,14 +14,22 @@
 
 % generated files are under VIM/datafiles/preprocessed_new/v2/WordVsNonword/contact_band_activity/
 
+
+%%%%%%%%%%%%%% in case run on windows server
+addpath(genpath('E:\LeadDBSpractice\Dengyu\git\'));
+rmpath(genpath('E:\MATLAB\fieldtrip\'));
+rmpath(genpath('E:\MATLAB\bml\'));
+rmpath(genpath('E:\MATLAB\NPMK\'));
+rmpath(genpath('E:\MATLAB\spm12\'));
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % specify machine to run
 DW_machine;
 
 % make sure use built-in filfilt and hilbert
-rmpath(genpath([dropbox 'Functions/Dengyu/git/fieldtrip']));
-rmpath(genpath([dropbox 'Functions/Dengyu/git/NPMK']));
-rmpath(genpath([dropbox 'Functions/Dengyu/git/bml']));
-rmpath(genpath([dropbox 'Functions/Dengyu/git/fieldtrip']));
+rmpath(genpath([dropbox 'git/fieldtrip']));
+rmpath(genpath([dropbox 'git/NPMK']));
+rmpath(genpath([dropbox 'git/bml']));
 rmpath(genpath('/Users/Dengyu/Downloads/spm12'));
 
 % load in stat_table as a table reference, use the same row index
@@ -36,7 +46,8 @@ band_selection = {'delta', 'theta', 'alpha','lowbeta','highbeta', 'beta', 'gamma
 fs = 1000;
 
 %filter load
-load([dropbox,'Functions/Dengyu/Filter/bpFilt.mat']);
+load([dropbox,'Filter/bpFilt.mat']);
+
 
 % use only ref data
 ref_selection = {'ref'};
